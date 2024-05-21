@@ -1,23 +1,8 @@
-import { useEffect, useState } from "react";
-import apiClient from "../services/api-client";
 import { Text } from "@chakra-ui/react";
-
-interface Exercise {
-  id: string;
-  name: string;
-}
+import { useExercises } from "../hooks/useExercises";
 
 const ExerciseGrid = () => {
-  const [exercises, setExercises] = useState<Exercise[]>([]);
-  const [error, SetError] = useState("");
-
-  useEffect(() => {
-    apiClient
-      .get<Exercise[]>("/exercises")
-      .then((res) => setExercises(res.data))
-      .catch((err) => SetError(err.message));
-  });
-
+  const { exercises, error } = useExercises();
   return (
     <>
       {error && <Text>{error}</Text>}
